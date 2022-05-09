@@ -65,7 +65,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 ## Text Classification Using Naive Bayes Classifier
 
-1. load train data from 20newsgroups dataset and check target_names
+**1. load train data from 20newsgroups dataset and check target_names**
 
    ```python
    from sklearn.datasets import fetch_20newsgroups
@@ -82,7 +82,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    twenty_train.target_names
    ```
    
-2. fit CountVectorizer with train data and transform train data to CountVectors 
+  **2. fit CountVectorizer with train data and transform train data to CountVectors** 
 
    ```python
    from sklearn.feature_extraction.text import CountVectorizer
@@ -92,7 +92,9 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    x_train_counts.shape
    ```
    
-3. fit TfidfTransformer with train countVectors and transform train countVectors to TfidfVectors
+   텍스트 문자열의 집합을 token count matrix로 변환시킨다.
+   
+  **3. fit TfidfTransformer with train countVectors and transform train countVectors to TfidfVectors**
 
    ```python
    from sklearn.feature_extraction.text import TfidfTransformer
@@ -101,8 +103,9 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    X_train_tf = tfidf_transformer.fit_transform(x_train_counts)
    X_train_tf.shape 
    ```
+   count matrix의 값을 정규화된 tf-idf 값으로 변환시킨다. 단어의 빈도를 고려한 적절한 가중치가 각 단어의 값에 곱해진다. 
    
-4. fit MultinomialNB with train TfidfVectors and train target
+  **4. fit MultinomialNB with train TfidfVectors and train target**
    
    ```python
    from sklearn.naive_bayes import MultinomialNB
@@ -110,7 +113,9 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    clf = MultinomialNB().fit(X_train_tf, twenty_train.target)
    ```
    
-5. make pipeline and fit model with train data and train target
+   feature counts 또는 tf-idf fractional counts를 받아 naive bayes algorithm에 따라 maximum likelihood estimate인    category를 찾고, 분류 결과를 출력한다.
+   
+  **5. make pipeline and fit model with train data and train target**
   
    ```python
    from sklearn.pipeline import Pipeline
@@ -124,7 +129,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    text_clf.fit(twenty_train.data, twenty_train.target)
    ```
    
-6. load test data from 20newsgroups dataset and check accuracy
+  **6. load test data from 20newsgroups dataset and check accuracy**
 
    ```python
    import numpy as np
@@ -142,7 +147,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    
    ![13_naive bayes classifier accuracy](https://user-images.githubusercontent.com/104701375/167376491-6e501a6b-7a08-49f2-84bd-9174eaff1401.png)
    
-7. creating confusion matrix and heat map
+  **7. creating confusion matrix and heat map**
    
    ```python
    from sklearn.metrics import confusion_matrix
@@ -162,3 +167,37 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    ```
    ![14_naive bayes classifier output](https://user-images.githubusercontent.com/104701375/167376522-23661745-cf27-4ee2-b2bf-328fd72e3251.png)
 
+## Text Classification Using SGDClassifier
+
+SGDClassifier도 MultinomialNB와 마찬가지로 텍스트 문서를 분류할 수 있는 분류기 중 하나이다. 
+
+SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스트 분류 모델을 더 정확하게 트레이닝 시키고, SVM 방식의 분류 결과를 출력할 수 있다. 이 때 여러 개의 binary classifiers(one versus all)가 결합되어 multi-class classification이 수행된다. 
+
+정확도를 더 올릴 수 있는지 확인하기 위해 classifier model을 SGDClassifier로 바꿔본다. 
+
+5단계만 다음과 같이 변경되고 나머지 단계는 MultinomialNB를 사용할 때와 동일하다.
+
+   **5. make pipeline and fit model with train data and train target** 
+  
+   ```python
+   from sklearn.pipeline import Pipeline
+   from sklearn.linear_model import SGDClassifier
+
+   text_clf = Pipeline([ 
+       ('vect', CountVectorizer()),
+       ('tfidf', TfidfTransformer()),
+       ('clf',SGDClassifier(loss='hinge', penalty='L2',
+       alpha=1e-3, random_state=42,
+       max_iter=5, tol=None))
+   ])
+
+   text_clf.fit(twenty_train.data, twenty_train.target)
+   ```
+
+**결과**
+
+![15_SGDClassifier accuracy](https://user-images.githubusercontent.com/104701375/167381271-14709d6d-df59-40f2-818f-91d25177c6ce.png)
+
+balanced accuracy는 비슷하지만, accuracy가 5% 정도 개선되었다.
+
+![16_SGDClassifier output](https://user-images.githubusercontent.com/104701375/167381279-4020fe39-6bdb-4297-a941-950d8c9d46fb.png)
