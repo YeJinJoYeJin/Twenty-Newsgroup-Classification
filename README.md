@@ -63,6 +63,102 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 ![12_확률값 smoothing](https://user-images.githubusercontent.com/104701375/167370335-8eb68322-3718-4482-882b-7b3b6b730685.png)
 
+## Text Classification Using Naive Bayes Classifier
 
+1. load train data from 20newsgroups dataset and check target_names
 
+   ```python
+   from sklearn.datasets import fetch_20newsgroups
+
+   categories = ['alt.atheism','comp.graphics','comp.os.ms-windows.misc',
+    'comp.sys.ibm.pc.hardware','comp.sys.mac.hardware','comp.windows.x',
+    'misc.forsale','rec.autos','rec.motorcycles','rec.sport.baseball',
+    'rec.sport.hockey','sci.crypt','sci.electronics','sci.med','sci.space',
+    'soc.religion.christian','talk.politics.guns','talk.politics.mideast',
+    'talk.politics.misc','talk.religion.misc'
+   ]
+
+   twenty_train = fetch_20newsgroups(subset='train', categories = categories, shuffle= True, random_state=42)
+   twenty_train.target_names
+   ```
+   
+2. fit CountVectorizer with train data and transform train data to CountVectors 
+
+   ```python
+   from sklearn.feature_extraction.text import CountVectorizer
+
+   count_vect = CountVectorizer()
+   x_train_counts = count_vect.fit_transform(twenty_train.data)
+   x_train_counts.shape
+   ```
+   
+3. fit TfidfTransformer with train countVectors and transform train countVectors to TfidfVectors
+
+   ```python
+   from sklearn.feature_extraction.text import TfidfTransformer
+
+   tfidf_transformer = TfidfTransformer()
+   X_train_tf = tfidf_transformer.fit_transform(x_train_counts)
+   X_train_tf.shape 
+   ```
+   
+4. fit MultinomialNB with train TfidfVectors and train target
+   
+   ```python
+   from sklearn.naive_bayes import MultinomialNB
+
+   clf = MultinomialNB().fit(X_train_tf, twenty_train.target)
+   ```
+   
+5. make pipeline and fit model with train data and train target
+  
+   ```python
+   from sklearn.pipeline import Pipeline
+
+   text_clf = Pipeline([ 
+       ('vect', CountVectorizer()),
+       ('tfidf', TfidfTransformer()),
+       ('clf', MultinomialNB())
+   ])
+
+   text_clf.fit(twenty_train.data, twenty_train.target)
+   ```
+   
+6. load test data from 20newsgroups dataset and check accuracy
+
+   ```python
+   import numpy as np
+   from sklearn import metrics
+
+   twenty_test = fetch_20newsgroups(subset='test', categories=categories, shuffle=True, random_state=42)
+   docs_test = twenty_test.data
+   predicted = text_clf.predict(docs_test)
+
+   accuracy = np.mean(predicted == twenty_test.target)
+   print(f'the accuracy is {accuracy:.3f}')
+   bd_accuracy = metrics.balanced_accuracy_score(predicted, twenty_test.target)
+   print(f'the balanced accuracy is {bd_accuracy:.3f}')
+   ```
+   
+   ![13_naive bayes classifier accuracy](https://user-images.githubusercontent.com/104701375/167376491-6e501a6b-7a08-49f2-84bd-9174eaff1401.png)
+   
+7. creating confusion matrix and heat map
+   
+   ```python
+   from sklearn.metrics import confusion_matrix
+   import matplotlib.pyplot as plt
+   import seaborn as sns
+
+   sns.set(rc = {'figure.figsize':(20,10)})
+
+   mat = confusion_matrix(twenty_test.target, predicted)
+
+   sns.heatmap(mat.T, square=True, annot=True, fmt='d',
+   cbar=False, xticklabels = twenty_train.target_names,
+   yticklabels= twenty_train.target_names)
+
+   plt.xlabel('true categories')
+   plt.ylabel('predicted categories')
+   ```
+   ![14_naive bayes classifier output](https://user-images.githubusercontent.com/104701375/167376522-23661745-cf27-4ee2-b2bf-328fd72e3251.png)
 
