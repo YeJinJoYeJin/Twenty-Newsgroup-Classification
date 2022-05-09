@@ -8,7 +8,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 베이즈 정리(Bayes’ thorem)는 두 확률변수의 사전확률과 사후확률(조건부확률) 사이의 관계를 나타내는 정리이다.
 
-사전확률로부터 사후확률을 구하는 것은, 어떤 사건이 만들어 놓은 상황에서, 그 사건이 일어난 후 앞으로 일어나게 될 다른 사건의 가능성을 구하는 것을 말한다. 즉, 기존 사건들의 확률(사전확률)을 알고 있다면, 어떤 사건 이후의 조건부 확률을 알 수 있다는 것이다.
+사전확률로부터 사후확률을 구하는 것은, 어떤 사건이 만들어 놓은 상황에서 그 사건이 일어난 후 앞으로 일어나게 될 다른 사건의 가능성을 구하는 것을 말한다. 즉, 기존 사건들의 확률(사전확률)을 알고 있다면 어떤 사건 이후의 조건부 확률을 알 수 있다는 것이다.
 
 베이즈 정리는 확률임에도 귀납적, 경험적인 추론을 사용하며, 불확실성 하에서 의사결정 문제를 수학적으로 다룰 때 중요하게 이용된다.
 
@@ -29,7 +29,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 ![04_나이브 베이지안 알고리즘](https://user-images.githubusercontent.com/104701375/167361080-115c71a6-92ef-44a5-9428-6ac1ae49c799.png)
 
-최적화 문제를 풀 때, 분모의 P(B)는 결과에 영향을 미치지 않으므로 생략할 수도 있다.
+최적화 문제를 풀 때, 분모의 P(B)는 결과에 영향을 미치지 않으므로 생략할 수 있다.
 
 ## Naive Bayes Classifier
 
@@ -198,7 +198,7 @@ SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스�
    ```
    hinge loss를 설정하여 트레이닝 데이터 각각의 카테고리를 구분하면서 데이터와의 거리가 가장 먼 결정경계를 찾게 된다.
    
-   모델의 predictors 수를 줄여서 복잡도를 낮춰주면 overfitting가능성을 줄이고 정확도를 향상시킬 수 있다. L2 penalty는  모든 predictors를 제곱한 값이 작아질수록 loss가 작아지고 더 좋은 모델이 되게 하므로, 결과에 영향을 미치는 predictors의 수를 줄여주는 효과를 갖는다. 이 때 alpha는 penalty와 곱해지는 hyperparameter로, alpha의 값에 따라 penalty의 강도를 조절할 수 있다.    
+   모델의 predictors 수를 줄여서 복잡도를 낮춰주면 overfitting가능성을 줄이고 정확도를 향상시킬 수 있다. L2 penalty는  모든 predictors를 제곱한 값의 합이 작아질수록 loss가 작아지고 더 좋은 모델이 되게 하므로, 결과에 영향을 미치는 predictors의 수를 줄여주는 효과를 갖는다. 이 때 alpha는 penalty와 곱해지는 hyperparameter로, alpha 값에 따라 penalty의 강도를 조절할 수 있다.    
    
 **결과**
 
@@ -207,3 +207,14 @@ SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스�
 balanced accuracy는 비슷하지만, accuracy가 5% 정도 개선되었다.
 
 ![16_SGDClassifier output](https://user-images.githubusercontent.com/104701375/167381279-4020fe39-6bdb-4297-a941-950d8c9d46fb.png)
+
+# 참고자료
+
+- [Bayes’ thorem 1](https://ko.wikipedia.org/wiki/%EB%B2%A0%EC%9D%B4%EC%A6%88_%EC%A0%95%EB%A6%AC)
+- [Bayes’ thorem 2](https://namu.wiki/w/%EB%B2%A0%EC%9D%B4%EC%A6%88%20%EC%A0%95%EB%A6%AC)
+- [Naive Bayes Algorithm](https://namu.wiki/w/%EB%82%98%EC%9D%B4%EB%B8%8C%20%EB%B2%A0%EC%9D%B4%EC%A7%80%EC%95%88%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
+- [text classification using naïve bayes 1](https://towardsdatascience.com/text-classification-using-naive-bayes-theory-a-working-example-2ef4b7eb7d5a)
+- [text classification using naïve bayes 2](https://www.youtube.com/watch?v=xtq-4Q-GK14)
+- [stochastic gradient descent 1](https://scikit-learn.org/stable/modules/sgd.html)
+- [stochastic gradient descent 2](https://ai92.tistory.com/118)
+- [SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html#sklearn.linear_model.SGDClassifier)
