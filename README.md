@@ -173,6 +173,9 @@ SGDClassifier도 MultinomialNB와 마찬가지로 텍스트 문서를 분류할 
 
 SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스트 분류 모델을 더 정확하게 트레이닝 시키고, SVM 방식의 분류 결과를 출력할 수 있다. 이 때 여러 개의 binary classifiers(one versus all)가 결합되어 multi-class classification이 수행된다. 
 
+![09_SGDClassifier](https://user-images.githubusercontent.com/104701375/167381997-8749a8b9-6379-4317-aa63-3d057510b5d0.png)
+
+
 정확도를 더 올릴 수 있는지 확인하기 위해 classifier model을 SGDClassifier로 바꿔본다. 
 
 5단계만 다음과 같이 변경되고 나머지 단계는 MultinomialNB를 사용할 때와 동일하다.
@@ -193,7 +196,10 @@ SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스�
 
    text_clf.fit(twenty_train.data, twenty_train.target)
    ```
-
+   hinge loss를 설정하여 트레이닝 데이터 각각의 카테고리를 구분하면서 데이터와의 거리가 가장 먼 결정경계를 찾게 된다.
+   
+   모델의 predictors 수를 줄여서 복잡도를 낮춰주면 overfitting가능성을 줄이고 정확도를 향상시킬 수 있다. L2 penalty는  모든 predictors를 제곱한 값이 작아질수록 loss가 작아지고 더 좋은 모델이 되게 하므로, 결과에 영향을 미치는 predictors의 수를 줄여주는 효과를 갖는다. 이 때 alpha는 penalty와 곱해지는 hyperparameter로, alpha의 값에 따라 penalty의 강도를 조절할 수 있다.    
+   
 **결과**
 
 ![15_SGDClassifier accuracy](https://user-images.githubusercontent.com/104701375/167381271-14709d6d-df59-40f2-818f-91d25177c6ce.png)
