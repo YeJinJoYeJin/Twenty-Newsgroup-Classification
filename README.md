@@ -198,7 +198,8 @@ SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스�
    ```
    hinge loss를 설정하여 트레이닝 데이터 각각의 카테고리를 구분하면서 데이터와의 거리가 가장 먼 결정경계를 찾게 된다.
    
-   모델의 predictors 수를 줄여서 복잡도를 낮춰주면 overfitting가능성을 줄이고 정확도를 향상시킬 수 있다. L2 penalty는  모든 predictors를 제곱한 값의 합이 작아질수록 loss가 작아지고 더 좋은 모델이 되게 하므로, 결과에 영향을 미치는 predictors의 수를 줄여주는 효과를 갖는다. 이 때 alpha는 penalty와 곱해지는 hyperparameter로, alpha 값에 따라 penalty의 강도를 조절할 수 있다.    
+   모델의 predictors 수를 줄여서 복잡도를 낮춰주면 overfitting 가능성을 줄이고 정확도를 향상시킬 수 있다. 
+   L2 penalty는  모든 predictors의 계수를 제곱한 값의 합이 작아질수록 loss가 작아지게 만든다. 따라서 결과에 영향을 미치는 predictors의 수를 줄여주는 효과를 갖는다. 이 때 alpha는 penalty와 곱해지는 hyperparameter로, alpha 값에 따라 penalty의 강도를 조절할 수 있다.    
    
 **결과**
 
