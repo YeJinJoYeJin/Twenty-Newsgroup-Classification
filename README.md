@@ -8,7 +8,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 베이즈 정리(Bayes’ thorem)는 두 확률변수의 사전확률과 사후확률(조건부확률) 사이의 관계를 나타내는 정리이다.
 
-사전확률로부터 사후확률을 구하는 것은, 어떤 사건이 만들어 놓은 상황에서 그 사건이 일어난 후 앞으로 일어나게 될 다른 사건의 가능성을 구하는 것을 말한다. 즉, 기존 사건들의 확률(사전확률)을 알고 있다면 어떤 사건 이후의 조건부 확률을 알 수 있다는 것이다.
+사전확률로부터 사후확률을 구하는 것은, 어떤 사건이 일어난 후 앞으로 일어나게 될 다른 사건의 가능성을 구하는 것을 말한다. 즉, 기존 사건들의 확률(사전확률)을 알고 있다면 어떤 사건 이후의 조건부 확률을 알 수 있다는 것이다.
 
 베이즈 정리는 확률임에도 귀납적, 경험적인 추론을 사용하며, 불확실성 하에서 의사결정 문제를 수학적으로 다룰 때 중요하게 이용된다.
 
@@ -35,9 +35,9 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 나이브 베이즈 분류기(Naive Bayes Classifier)는 모든 특성들이 독립적이라는 가정을 기반으로 텍스트 문서를 분류하는 대표적인 분류기 중 하나이다.  
 
-텍스트 문서 데이터는 feature matrix와 response(또는 target vector) 두 부분으로 나누어진다.
-- feature matrix(X): 각각의 행이 dependent features로 구성된 벡터를 포함하는 행렬이다.
-- response/target vector(y): feature matrix의 각 벡터들이 속한 classes를 포함하는 벡터이다.  
+텍스트 문서 데이터는 feature matrix와 response vector(또는 target vector) 두 부분으로 나누어진다.
+- feature matrix (X): 각각의 행이 dependent features를 나타내는 벡터를 포함하는 행렬이다.
+- response vector/target vector (y): feature matrix의 각 벡터들이 속한 classes를 포함하는 벡터이다.  
 
 베이즈 정리를 통해 X가 주어졌을 때 X가 y에 속할 확률을 다음과 같이 표현할 수 있다.
 
@@ -113,7 +113,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
    clf = MultinomialNB().fit(X_train_tf, twenty_train.target)
    ```
    
-   feature counts 또는 tf-idf fractional counts를 받아 naive bayes algorithm에 따라 maximum likelihood estimate인    category를 찾고, 분류 결과를 출력한다.
+   MultinomialNB 모델은 feature counts 또는 tf-idf fractional counts를 받아 naive bayes algorithm에 따라 maximum likelihood estimate인    category를 찾고, 분류 결과를 출력한다.
    
   **5. make pipeline and fit model with train data and train target**
   
