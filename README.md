@@ -171,7 +171,7 @@ Naive Bayes Classifier를 사용할 것이므로, 먼저 베이즈 정리를 이
 
 SGDClassifier도 MultinomialNB와 마찬가지로 텍스트 문서를 분류할 수 있는 분류기 중 하나이다. 
 
-SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스트 분류 모델을 더 정확하게 트레이닝 시키고, SVM 방식의 분류 결과를 출력할 수 있다. 이 때 여러 개의 binary classifiers(one versus all)가 결합되어 multi-class classification이 수행된다. 
+SGDClassifier는 stochastic gradient descent(SGD) 기법을 적용하여 텍스트 분류 모델을 트레이닝 시키고, SVM 방식의 분류 결과를 출력할 수 있다. 이 때 여러 개의 binary classifiers(one versus all)가 결합되어 multi-class classification이 수행된다. 
 
 ![09_SGDClassifier](https://user-images.githubusercontent.com/104701375/167381997-8749a8b9-6379-4317-aa63-3d057510b5d0.png)
 
